@@ -28,8 +28,12 @@ public class FlowerEnemy extends Enemy {
     @Override
     public MarioSprite clone() {
         FlowerEnemy sprite = new FlowerEnemy(false, this.x, this.y);
+        sprite.x = this.x;
+        sprite.y = this.y;
         sprite.xa = this.xa;
         sprite.ya = this.ya;
+        sprite.alive = this.alive;
+        sprite.facing = this.facing;
         sprite.initialCode = this.initialCode;
         sprite.width = this.width;
         sprite.height = this.height;
@@ -74,5 +78,13 @@ public class FlowerEnemy extends Enemy {
             this.tick++;
             this.graphics.index = this.type.getStartIndex() + ((tick / 2) & 1) * 2 + ((tick / 6) & 1);
         }
+    }
+
+    public float getyStart() {
+        return yStart;
+    }
+
+    public int getWaitTime() {
+        return waitTime;
     }
 }

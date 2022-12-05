@@ -32,6 +32,7 @@ public class BulletBill extends MarioSprite {
         BulletBill sprite = new BulletBill(false, x, y, this.facing);
         sprite.xa = this.xa;
         sprite.ya = this.ya;
+        sprite.alive = this.alive;
         sprite.width = this.width;
         sprite.height = this.height;
         return sprite;

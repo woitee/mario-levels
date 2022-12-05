@@ -37,6 +37,7 @@ public class Fireball extends MarioSprite {
         Fireball f = new Fireball(false, this.x, this.y, this.facing);
         f.xa = this.xa;
         f.ya = this.ya;
+        f.alive = this.alive;
         f.initialCode = this.initialCode;
         f.width = this.width;
         f.height = this.height;
@@ -189,5 +190,9 @@ public class Fireball extends MarioSprite {
     public void render(Graphics og) {
         super.render(og);
         this.graphics.render(og, (int) (this.x - this.world.cameraX), (int) (this.y - this.world.cameraY));
+    }
+
+    public boolean isOnGround() {
+        return onGround;
     }
 }

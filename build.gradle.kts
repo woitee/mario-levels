@@ -32,6 +32,13 @@ tasks.register<JavaExec>("singleRun") {
     mainClass.set("RunGameKt")
 }
 
+tasks.register<JavaExec>("singleRunMff") {
+    group = "run"
+
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("RunGameMffKt")
+}
+
 tasks.register<JavaExec>("generateCSV") {
     group = "run"
 

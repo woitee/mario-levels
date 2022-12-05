@@ -32,6 +32,7 @@ public class FireFlower extends MarioSprite {
         FireFlower f = new FireFlower(false, x, y);
         f.xa = this.xa;
         f.ya = this.ya;
+        f.alive = this.alive;
         f.initialCode = this.initialCode;
         f.width = this.width;
         f.height = this.height;
@@ -78,5 +79,9 @@ public class FireFlower extends MarioSprite {
     public void render(Graphics og) {
         super.render(og);
         this.graphics.render(og, (int) (this.x - this.world.cameraX), (int) (this.y - this.world.cameraY));
+    }
+
+    public int getLife() {
+        return life;
     }
 }

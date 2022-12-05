@@ -20,7 +20,7 @@ public class MarioLevel {
 
     private int[][] levelTiles;
     private SpriteType[][] spriteTemplates;
-    private int[][] lastSpawnTime;
+    //private int[][] lastSpawnTime;
     private MarioTilemap graphics;
     private MarioImage flag;
 
@@ -40,12 +40,12 @@ public class MarioLevel {
 
         this.levelTiles = new int[lines[0].length()][lines.length];
         this.spriteTemplates = new SpriteType[lines[0].length()][lines.length];
-        this.lastSpawnTime = new int[lines[0].length()][lines.length];
+        //this.lastSpawnTime = new int[lines[0].length()][lines.length];
         for (int y = 0; y < lines.length; y++) {
             for (int x = 0; x < lines[y].length(); x++) {
                 this.levelTiles[x][y] = 0;
                 this.spriteTemplates[x][y] = SpriteType.NONE;
-                this.lastSpawnTime[x][y] = -40;
+                //this.lastSpawnTime[x][y] = -40;
             }
         }
 
@@ -282,14 +282,15 @@ public class MarioLevel {
         level.exitTileX = this.exitTileX;
         level.exitTileY = this.exitTileY;
         level.levelTiles = new int[this.levelTiles.length][this.levelTiles[0].length];
-        level.lastSpawnTime = new int[this.levelTiles.length][this.levelTiles[0].length];
+        level.spriteTemplates = new SpriteType[this.levelTiles.length][this.levelTiles[0].length];
+        //level.lastSpawnTime = new int[this.levelTiles.length][this.levelTiles[0].length];
         for (int x = 0; x < level.levelTiles.length; x++) {
             for (int y = 0; y < level.levelTiles[x].length; y++) {
                 level.levelTiles[x][y] = this.levelTiles[x][y];
-                level.lastSpawnTime[x][y] = this.lastSpawnTime[x][y];
+                level.spriteTemplates[x][y] = this.spriteTemplates[x][y];
+                //level.lastSpawnTime[x][y] = this.lastSpawnTime[x][y];
             }
         }
-        level.spriteTemplates = this.spriteTemplates;
         return level;
     }
 
@@ -337,19 +338,23 @@ public class MarioLevel {
         return this.spriteTemplates[xTile][yTile];
     }
 
-    public int getLastSpawnTick(int xTile, int yTile) {
+    void setSpriteType(int xTile, int yTile, SpriteType spriteToSet) {
+        this.spriteTemplates[xTile][yTile] = spriteToSet;
+    }
+
+    /*public int getLastSpawnTick(int xTile, int yTile) {
         if (xTile < 0 || yTile < 0 || xTile > this.tileWidth - 1 || yTile > this.tileHeight - 1) {
             return 0;
         }
         return this.lastSpawnTime[xTile][yTile];
-    }
+    }*/
 
-    public void setLastSpawnTick(int xTile, int yTile, int tick) {
+    /*public void setLastSpawnTick(int xTile, int yTile, int tick) {
         if (xTile < 0 || yTile < 0 || xTile > this.tileWidth - 1 || yTile > this.tileHeight - 1) {
             return;
         }
         this.lastSpawnTime[xTile][yTile] = tick;
-    }
+    }*/
 
     public String getSpriteCode(int xTile, int yTile) {
         return xTile + "_" + yTile + "_" + this.getSpriteType(xTile, yTile).getValue();
@@ -385,5 +390,29 @@ public class MarioLevel {
         if (cameraX + MarioGame.width >= this.exitTileX * 16) {
             this.flag.render(og, this.exitTileX * 16 - 8 - cameraX, Math.max(1, this.exitTileY - 11) * 16 + 16 - cameraY);
         }
+    }
+
+    public int[][] getLevelTiles() {
+        int [][] levelTilesCopy = new int[this.levelTiles.length][this.levelTiles[0].length];
+
+        for (int x = 0; x < this.levelTiles.length; x++) {
+            for (int y = 0; y < this.levelTiles[x].length; y++) {
+                levelTilesCopy[x][y] = this.levelTiles[x][y];
+            }
+        }
+
+        return levelTilesCopy;
+    }
+
+    public SpriteType[][] getSpriteTemplates() {
+        SpriteType[][] spriteTemplatesCopy = new SpriteType[this.levelTiles.length][this.levelTiles[0].length];
+
+        for (int x = 0; x < this.levelTiles.length; x++) {
+            for (int y = 0; y < this.levelTiles[x].length; y++) {
+                spriteTemplatesCopy[x][y] = this.spriteTemplates[x][y];
+            }
+        }
+
+        return spriteTemplatesCopy;
     }
 }

@@ -354,6 +354,18 @@ public class MarioWorld {
                 if (x * 16 + 8 < mario.x - 16)
                     dir = 1;
 
+                // spawn new sprite and remove it from sprite templates
+                SpriteType spriteType = level.getSpriteType(x, y);
+                if (spriteType != SpriteType.NONE) {
+                    String spriteCode = level.getSpriteCode(x, y);
+                    MarioSprite newSprite = spriteType.spawnSprite(this.visuals, x, y, dir);
+                    newSprite.initialCode = spriteCode;
+                    this.addSprite(newSprite);
+                    this.level.setSpriteType(x, y, SpriteType.NONE);
+                }
+
+                // old enemy spawning system which led to respawning
+                /*
                 SpriteType type = level.getSpriteType(x, y);
                 if (type != SpriteType.NONE) {
                     String spriteCode = level.getSpriteCode(x, y);
@@ -373,6 +385,7 @@ public class MarioWorld {
                     }
                     this.level.setLastSpawnTick(x, y, this.currentTick);
                 }
+                */
 
                 if (dir != 0) {
                     ArrayList<TileFeature> features = TileFeature.getTileType(this.level.getBlock(x, y));
@@ -424,7 +437,7 @@ public class MarioWorld {
         }
         fireballsToCheck.clear();
 
-        sprites.addAll(0, addedSprites);
+        sprites.addAll(addedSprites);
         sprites.removeAll(removedSprites);
         addedSprites.clear();
         removedSprites.clear();
@@ -525,5 +538,21 @@ public class MarioWorld {
             }
             this.effects.get(i).render(og, cameraX, cameraY);
         }
+    }
+
+    public ArrayList<MarioSprite> getSprites() {
+        return sprites;
+    }
+
+    public ArrayList<MarioSprite> getSpriteClones() {
+        ArrayList<MarioSprite> spritesClone = new ArrayList<>();
+
+        for (MarioSprite sprite : this.sprites) {
+            MarioSprite spriteClone = sprite.clone();
+            spriteClone.world = this;
+            spritesClone.add(spriteClone);
+        }
+
+        return spritesClone;
     }
 }

@@ -58,6 +58,7 @@ public class Enemy extends MarioSprite {
         Enemy e = new Enemy(false, this.x, this.y, this.facing, this.type);
         e.xa = this.xa;
         e.ya = this.ya;
+        e.alive = this.alive;
         e.initialCode = this.initialCode;
         e.width = this.width;
         e.height = this.height;
@@ -381,4 +382,19 @@ public class Enemy extends MarioSprite {
         }
     }
 
+    public static class PrivateEnemyCopyInfo {
+        public boolean onGround;
+        public boolean avoidCliffs;
+        public boolean winged;
+        public boolean noFireballDeath;
+    }
+
+    public PrivateEnemyCopyInfo getPrivateCopyInfo() {
+        PrivateEnemyCopyInfo info = new PrivateEnemyCopyInfo();
+        info.onGround = this.onGround;
+        info.avoidCliffs = this.avoidCliffs;
+        info.winged = this.winged;
+        info.noFireballDeath = this.noFireballDeath;
+        return info;
+    }
 }

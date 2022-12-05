@@ -207,6 +207,13 @@ public class MarioForwardModel {
 
     private MarioWorld world;
 
+    /**
+     * Used by slim forward model for converting.
+     */
+    public MarioWorld getWorld() {
+        return this.world.clone();
+    }
+
     // stats
     private int fallKill;
     private int stompKill;
@@ -390,6 +397,28 @@ public class MarioForwardModel {
             enemyPos[3 * i + 2] = enemiesAlive.get(i).y;
         }
         return enemyPos;
+    }
+
+    public float[] getEnemiesFloatPosAndType() {
+        ArrayList<MarioSprite> enemiesAlive = this.world.getEnemies();
+        float[] enemyPosAndType = new float[enemiesAlive.size() * 3];
+        for (int i = 0; i < enemiesAlive.size(); i++) {
+            enemyPosAndType[3 * i] = enemiesAlive.get(i).type.getValue();
+            enemyPosAndType[3 * i + 1] = enemiesAlive.get(i).x;
+            enemyPosAndType[3 * i + 2] = enemiesAlive.get(i).y;
+        }
+        return enemyPosAndType;
+    }
+
+    public float[] getSpritesFloatPosAndType() {
+        ArrayList<MarioSprite> spritesAlive = this.world.getSprites();
+        float[] spritesPosAndType = new float[spritesAlive.size() * 3];
+        for (int i = 0; i < spritesAlive.size(); i++) {
+            spritesPosAndType[3 * i] = spritesAlive.get(i).type.getValue();
+            spritesPosAndType[3 * i + 1] = spritesAlive.get(i).x;
+            spritesPosAndType[3 * i + 2] = spritesAlive.get(i).y;
+        }
+        return spritesPosAndType;
     }
 
     /**

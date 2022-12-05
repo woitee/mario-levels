@@ -44,6 +44,9 @@ public class Mario extends MarioSprite {
     @Override
     public MarioSprite clone() {
         Mario sprite = new Mario(false, x - 8, y - 15);
+        sprite.x = this.x;
+        sprite.y = this.y;
+        sprite.alive = this.alive;
         sprite.xa = this.xa;
         sprite.ya = this.ya;
         sprite.initialCode = this.initialCode;
@@ -52,6 +55,8 @@ public class Mario extends MarioSprite {
         sprite.facing = this.facing;
         sprite.isLarge = isLarge;
         sprite.isFire = isFire;
+        sprite.oldLarge = oldLarge;
+        sprite.oldFire = oldFire;
         sprite.wasOnGround = wasOnGround;
         sprite.onGround = onGround;
         sprite.isDucking = isDucking;
@@ -500,5 +505,25 @@ public class Mario extends MarioSprite {
         super.render(og);
 
         this.graphics.render(og, (int) (this.x - this.world.cameraX), (int) (this.y - this.world.cameraY));
+    }
+
+    public static class PrivateMarioCopyInfo {
+        public int invulnerableTime;
+        public boolean oldLarge;
+        public boolean oldFire;
+        public float xJumpSpeed;
+        public float yJumpSpeed;
+        public float xJumpStart;
+    }
+
+    public PrivateMarioCopyInfo getPrivateMarioCopyInfo() {
+        PrivateMarioCopyInfo info = new PrivateMarioCopyInfo();
+        info.invulnerableTime = this.invulnerableTime;
+        info.oldLarge = this.oldLarge;
+        info.oldFire = this.oldFire;
+        info.xJumpSpeed = this.xJumpSpeed;
+        info.yJumpSpeed = this.yJumpSpeed;
+        info.xJumpStart = this.xJumpStart;
+        return info;
     }
 }
