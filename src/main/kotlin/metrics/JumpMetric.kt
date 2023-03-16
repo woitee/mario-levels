@@ -1,26 +1,21 @@
 package metrics
 
-import engine.core.MarioGame
-import engine.core.MarioResult
+import adapters.UniversalMarioGame
 import engine.helper.EventType
 
 class JumpMetric: AbstractMetric() {
     override val name = "jumps"
 
     override fun getValue(level: String): String {
-        val results = runBaumgartenAgent(level)
-
-        val jumpCount = results.gameEvents.filter { it.eventType == EventType.JUMP.value }.count()
-        return jumpCount.toString()
-    }
-
-    private fun runBaumgartenAgent(level: String): MarioResult {
-        val game = MarioGame()
-        return game.runGame(
-            agents.robinBaumgarten.Agent(),
+        val game = UniversalMarioGame()
+        val results = game.runGame(
+            mff.agents.astar.Agent(),
             level,
             200,
             0
         )
+
+        val jumpCount = results.gameEvents.filter { it.eventType == EventType.JUMP.value }.count()
+        return jumpCount.toString()
     }
 }
